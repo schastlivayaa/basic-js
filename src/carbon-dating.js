@@ -1,4 +1,4 @@
-const { NotImplementedError } = require('../lib');
+const { NotImplementedError } = require("../lib");
 
 const MODERN_ACTIVITY = 15;
 const HALF_LIFE_PERIOD = 5730;
@@ -18,7 +18,12 @@ const HALF_LIFE_PERIOD = 5730;
  *
  */
 function dateSample(sampleActivity) {
-  if (typeof sampleActivity !== 'string' || Number(sampleActivity) <= 0 || Number(sampleActivity >= MODERN_ACTIVITY) || isNaN(sampleActivity)) {
+  if (
+    typeof sampleActivity !== "string" ||
+    Number(sampleActivity) <= 0 ||
+    Number(sampleActivity >= MODERN_ACTIVITY) ||
+    isNaN(sampleActivity)
+  ) {
     return false;
   }
 
@@ -30,5 +35,5 @@ function dateSample(sampleActivity) {
 }
 
 module.exports = {
-  dateSample
+  dateSample,
 };
