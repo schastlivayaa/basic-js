@@ -1,4 +1,4 @@
-const { NotImplementedError } = require('../lib');
+const { NotImplementedError } = require("../lib");
 
 /**
  * Implement class VigenereCipheringMachine that allows us to create
@@ -20,14 +20,64 @@ const { NotImplementedError } = require('../lib');
  *
  */
 class VigenereCipheringMachine {
-  encrypt() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+  constructor(isDirect = true) {
+    this.isDirect = isDirect;
   }
 
-  decrypt() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+  encrypt(message, key) {
+    if (!message || !key) throw new Error("Incorrect arguments!");
+
+    message = message.toUpperCase();
+    key = key.toUpperCase();
+
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let result = "";
+    let i = 0;
+
+    for (const char of message) {
+      if (alphabet.includes(char)) {
+        const mIndex = alphabet.indexOf(char);
+        const kIndex = alphabet.indexOf(key[i % key.length]);
+        const newChar = alphabet[(mIndex + kIndex) % 26];
+
+        result += newChar;
+        i += 1;
+      } else {
+        result += char;
+      }
+    }
+
+    if (!this.isDirect) result = result.split("").reverse().join("");
+
+    return result;
+  }
+
+  decrypt(encryptedMessage, key) {
+    if (!encryptedMessage || !key) throw new Error("Incorrect arguments!");
+
+    encryptedMessage = encryptedMessage.toUpperCase();
+    key = key.toUpperCase();
+
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let result = "";
+    let i = 0;
+
+    for (const char of encryptedMessage) {
+      if (alphabet.includes(char)) {
+        const mIndex = alphabet.indexOf(char);
+        const kIndex = alphabet.indexOf(key[i % key.length]);
+        const newChar = alphabet[(mIndex - kIndex + 26) % 26];
+
+        result += newChar;
+        i += 1;
+      } else {
+        result += char;
+      }
+    }
+
+    if (!this.isDirect) result = result.split("").reverse().join("");
+
+    return result;
   }
 }
 
